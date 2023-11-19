@@ -75,6 +75,6 @@ public class Carta {
         }
 
         // ---- Cartas normales ----
-        return "El " + this.getNum() + " de " + this.getColor();
+        return "El " + this.getNum() + " " + this.getColor();
     }
 }
