@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8179391a-aca5-4985-8492-85834aecf26d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Devour-Hope/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Devour-Hope/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Devour-Hope/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Devour-Hope/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Devour-Hope/Devour-Hope.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Devour-Hope/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +10,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2YMVWIZDSUIcbTjtMSH24uYOeVJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -27,7 +22,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Luis/Desktop/UR/3º/Sistemas Distribuidos/Trabajo/Devour-Hope"
+    "last_opened_file_path": "C:/Users/Luis/Desktop/UR/3º/Sistemas Distribuidos/Trabajo/Devour-Hope",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -51,5 +47,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
   </component>
 </project>
