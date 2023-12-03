@@ -25,4 +25,10 @@ public class JugadorReal extends Jugador{
         return c;
     }
 
+    @Override
+    public void robarCarta(Carta c) {
+        System.out.println("No tienes una carta para jugar");
+        this.getMano().add(c);
+    }
+
 }

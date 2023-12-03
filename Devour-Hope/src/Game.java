@@ -7,7 +7,7 @@ public class Game {
     private Mesa mesa;
     private  Baraja baraja;
     private List<Jugador> jugadores;
-    private static int turno = 1;
+    public static int turno = 1;
 
     // Game offline
     public Game(String user, int numRobots){
@@ -98,13 +98,16 @@ public class Game {
     }
 
     public boolean robar(int numJug){
-        for(int i = 0; i < this.jugadores.get(numJug).getMano().size(); i++){
-            if (this.jugadores.get(numJug).poderjugar(this.jugadores.get(numJug).getMano().get(i))){
-                return true;
+        for(int i = 0, n =  this.jugadores.get(numJug).getMano().size(); i < n; i ++){
+            Carta c1 = this.jugadores.get(numJug).getMano().get(i);
+            Carta c2 = this.mesa.obtenerUltimaCarta();
+
+            if (c1.getNum() == c2.getNum() || c1.getColor() == c2.getColor() || c1.getNum() == 13){
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     public boolean jugarCarta(Carta c) {

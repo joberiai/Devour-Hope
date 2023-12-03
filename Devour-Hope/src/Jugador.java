@@ -34,13 +34,8 @@ public abstract class Jugador {
     }
 
     public boolean poderjugar(Carta c) {
-        /*
-        if(mesa.colocarCarta(c)==1 || mesa.colocarCarta(c)==2 || mesa.colocarCarta(c)==3){
-            return true;
-        }
-        return false;
-         */
-        return 1==2;
+        // return Mesa.poderJugar(c);
+        return true;
     }
 
     public boolean tieneCarta(Carta carta) {
@@ -75,7 +70,6 @@ public abstract class Jugador {
 
     public abstract Carta elegirCarta();
 
-    public void robarCarta(Carta c){
-        this.getMano().add(c);
-    }
+    public abstract void robarCarta(Carta c);
+
 }

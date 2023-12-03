@@ -8,7 +8,7 @@ public class JugadorRobot extends Jugador{
     public Carta elegirCarta() {
         Carta c = null;
 
-        for (int i = 0; i <= this.numCartas(); i++) {
+        for (int i = 0, n = this.numCartas(); i < n; i++) {
             c = this.getMano().get(i);
 
             if (this.poderjugar(c)) {
@@ -20,5 +20,10 @@ public class JugadorRobot extends Jugador{
         }
 
         return c;
+    }
+
+    @Override
+    public void robarCarta(Carta c) {
+        this.getMano().add(c);
     }
 }

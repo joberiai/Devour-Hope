@@ -17,9 +17,15 @@ public class Mesa {
         }
         return this.cartasColocadas.get(this.cartasColocadas.size() - 1);
     }
+
+    public boolean poderJugar(Carta c){
+        return this.obtenerUltimaCarta().getNum() == c.getNum() ||
+               this.obtenerUltimaCarta().getColor() == c.getColor() ||
+               c.getNum() == 13;
+    }
     @Override
     public String toString() {
         return "Mesa: " + "\n" +
-                "Ultima carta = " + "\n" + this.obtenerUltimaCarta();
+                "Ultima carta = " + this.obtenerUltimaCarta();
     }
 }
