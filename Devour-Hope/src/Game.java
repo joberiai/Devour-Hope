@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Game  implements Serializable {
-    private Mesa mesa;
+    private  List<Carta> cartasColocadas;
     private  Baraja baraja;
     private List<Jugador> jugadores;
     public static int turno = 1;
@@ -13,7 +13,7 @@ public class Game  implements Serializable {
     // Game offline
     public Game(String user, int numRobots){
         this.baraja = new Baraja();
-        this.mesa = new Mesa();
+        this.cartasColocadas = new ArrayList<>();
         this.jugadores = new ArrayList<>();
 
         this.baraja.barajear();
@@ -27,13 +27,13 @@ public class Game  implements Serializable {
             }
         }
 
-        this.mesa.getCartasColocadas().add(baraja.sacarCarta());
+        this.cartasColocadas.add(baraja.sacarCarta());
     }
 
     // Game online
     public Game(int numRobots, int numReales) {
         this.baraja = new Baraja();
-        this.mesa = new Mesa();
+        this.cartasColocadas = new ArrayList<>();
         this.jugadores = new ArrayList<>();
 
         this.baraja.barajear();
@@ -45,7 +45,7 @@ public class Game  implements Serializable {
             }
         }
 
-        this.mesa.getCartasColocadas().add(baraja.sacarCarta());
+        this.cartasColocadas.add(baraja.sacarCarta());
     }
 
     // Getters / Setters
@@ -53,8 +53,8 @@ public class Game  implements Serializable {
         return baraja;
     }
 
-    public Mesa getMesa() {
-        return mesa;
+    public List<Carta> getCartasColocadas() {
+        return cartasColocadas;
     }
 
     public List<Jugador> getJugadores() {
@@ -101,7 +101,7 @@ public class Game  implements Serializable {
     public boolean robar(int numJug){
         for(int i = 0, n =  this.jugadores.get(numJug).getMano().size(); i < n; i ++){
             Carta c1 = this.jugadores.get(numJug).getMano().get(i);
-            Carta c2 = this.mesa.obtenerUltimaCarta();
+            Carta c2 = this.obtenerUltimaCarta();
 
             if (c1.getNum() == c2.getNum() || c1.getColor() == c2.getColor() || c1.getNum() == 13){
                 return false;
@@ -112,9 +112,9 @@ public class Game  implements Serializable {
     }
 
     public boolean jugarCarta(Carta c) {
-        if(this.mesa.obtenerUltimaCarta().getColor() == c.getColor() ||
-                this.mesa.obtenerUltimaCarta().getNum() == c.getNum()){
-            this.mesa.getCartasColocadas().add(c);
+        if(this.obtenerUltimaCarta().getColor() == c.getColor() ||
+                this.obtenerUltimaCarta().getNum() == c.getNum()){
+            this.getCartasColocadas().add(c);
 
             if (c.getNum() == 9){
 
@@ -136,12 +136,24 @@ public class Game  implements Serializable {
         return false;
     }
 
+    public Carta obtenerUltimaCarta(){
+        if (this.cartasColocadas.size() == 0){
+            return null;
+        }
+        return this.cartasColocadas.get(this.cartasColocadas.size() - 1);
+    }
+
+    public boolean poderJugar(Carta c){
+        return this.obtenerUltimaCarta().getNum() == c.getNum() ||
+                this.obtenerUltimaCarta().getColor() == c.getColor() ||
+                c.getNum() == 13;
+    }
 
     @Override
     public String toString() {
         return "Game:" + '\n' +
                 "Baraja = " + this.baraja.toString() + '\n' +
-                "Mesa = " + this.mesa.toString() + '\n' +
+                "Mesa = " + this.obtenerUltimaCarta().toString() + '\n' +
                 "Jugadores = " + this.jugadores.toString();
     }
 

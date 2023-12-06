@@ -29,6 +29,8 @@ public class Baraja {
         Carta carta = cartas.get(cartas.size() - 1);
         cartas.remove(cartas.size() - 1);
 
+        // Añadir comprobacion para no haber suficientes cartas
+
         return carta;
     }
     public int numCartas(){
