@@ -6,19 +6,14 @@ import java.net.Socket;
 
 public class Server {
     public static void main(String[] args) {
-        try(ServerSocket server = new ServerSocket(61000)){
+        try(ServerSocket server = new ServerSocket(55555)){
             while (true){
-                try(Socket s = server.accept();
-                    ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-                    ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream()){
+                try{
+                    Socket s = server.accept();
+                    HiloCartas hilo = new HiloCartas(s);
 
-
-                        oos.writeBytes("Dime el nombre de usuario: ");
-                        oos.flush();
-
-                        Game game = new Game();
-
-
+                    hilo.start();
+                    //s.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

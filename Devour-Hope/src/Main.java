@@ -37,7 +37,7 @@ public class Main {
         }
 
         if (g.haAcabado()) {
-            System.out.println(g.ganador().toString());
+            System.out.println("Ha ganado:" + g.ganador().toString());
         }
     }
 }
