@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Game  implements Serializable {
-    private  List<Carta> cartasColocadas;
-    private  Baraja baraja;
+    private static List<Carta> cartasColocadas;
+    private Baraja baraja;
     private List<Jugador> jugadores;
     public static int turno = 1;
 
@@ -45,6 +45,19 @@ public class Game  implements Serializable {
             }
         }
 
+        for (int i = 1; i <= numReales; i++) {
+            System.out.println("Dime el nombre de usuario:");
+            Scanner scan = new Scanner(System.in);
+            String user = scan.nextLine();
+
+            jugadores.add(new JugadorReal(user));
+            for (int j = 1; j <= 7; j++) {
+                this.jugadores.get(this.jugadores.size() - 1).getMano().add(baraja.sacarCarta());
+            }
+
+            this.jugadores.get(i-1).ordenarMano();
+        }
+
         this.cartasColocadas.add(baraja.sacarCarta());
     }
 
@@ -53,12 +66,24 @@ public class Game  implements Serializable {
         return baraja;
     }
 
+    public void setBaraja(Baraja b) {
+        this.baraja = b;
+    }
+
     public List<Carta> getCartasColocadas() {
         return cartasColocadas;
     }
 
+    public void setCartasColocadas(List<Carta> list) {
+        cartasColocadas = list;
+    }
+
     public List<Jugador> getJugadores() {
         return jugadores;
+    }
+
+    public void setJugadores(List<Jugador> list){
+        jugadores = list;
     }
 
     public static int getTurno() {
@@ -136,17 +161,17 @@ public class Game  implements Serializable {
         return false;
     }
 
-    public Carta obtenerUltimaCarta(){
-        if (this.cartasColocadas.size() == 0){
-            return null;
-        }
-        return this.cartasColocadas.get(this.cartasColocadas.size() - 1);
+    public static boolean puedeJugar(Carta c){
+        return c.getNum() == obtenerUltimaCarta().getNum() ||
+                c.getColor() == obtenerUltimaCarta().getColor() ||
+                c.getNum() == 13;
     }
 
-    public boolean poderJugar(Carta c){
-        return this.obtenerUltimaCarta().getNum() == c.getNum() ||
-                this.obtenerUltimaCarta().getColor() == c.getColor() ||
-                c.getNum() == 13;
+    public static Carta obtenerUltimaCarta(){
+        if (cartasColocadas.size() == 0){
+            return null;
+        }
+        return cartasColocadas.get(cartasColocadas.size() - 1);
     }
 
     @Override

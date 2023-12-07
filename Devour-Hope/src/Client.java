@@ -20,31 +20,34 @@ public class Client {
 
             Scanner scan = new Scanner(System.in);
             int n = scan.nextInt();
-            String user;
+
+
+            Game g;
 
             switch (n){
                 case 1:
                     // Poner nombre usuario
-                    System.out.println("Dime el nombre de usuario: ");
-                    user = scan.nextLine();
+
 
 
 
                     break;
                 case 2:
-
+                    // Poner cantidad de jugadores
+                    g = new Game(2, 1);
+                    oos.writeObject(g);
+                    oos.flush();
 
                     break;
                 case 3:
-                    // Poner nombre usuario
+                    // Poner cantidad de jugadores
                     System.out.println("Dime el nombre de usuario: ");
-                    user = scan.nextLine();
 
-                    oos.writeBytes(user);
-                    oos.flush();
 
-                    Game g = (Game) ois.readObject();
-                    System.out.println(g.getMesa().toString());
+
+
+                    g = (Game) ois.readObject();
+                    System.out.println("Última carta: " + g.obtenerUltimaCarta());
 
                     break;
                 case 4:

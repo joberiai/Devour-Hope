@@ -1,4 +1,6 @@
-public class JugadorRobot extends Jugador{
+import java.io.Serializable;
+
+public class JugadorRobot extends Jugador implements Serializable {
 
     public JugadorRobot(String n) {
         super(n);
@@ -11,7 +13,7 @@ public class JugadorRobot extends Jugador{
         for (int i = 0, n = this.numCartas(); i < n; i++) {
             c = this.getMano().get(i);
 
-            if (this.poderjugar(c)) {
+            if (Game.puedeJugar(c)) {
                 System.out.println("Juego carta");
                 this.getMano().remove(c);
 

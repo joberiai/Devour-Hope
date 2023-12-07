@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public abstract class Jugador {
+public abstract class Jugador implements Serializable {
     private String usuario;
     private ArrayList<Carta> mano;
 
@@ -34,7 +35,7 @@ public abstract class Jugador {
     }
 
     public boolean poderjugar(Carta c) {
-        // return Mesa.poderJugar(c);
+        // return !Game.robar();
         return true;
     }
 
@@ -50,10 +51,10 @@ public abstract class Jugador {
 
     @Override
     public String toString() {
-        String infoJugador = "Jugador: " + usuario + '\n' +
-                             "Mano: ";
+        String infoJugador = "Mano: ";
+
         for(int i = 1; i <= mano.size(); i ++){
-            infoJugador = infoJugador + "(" + i + ")" + this.getMano().get(i-1) + ",";
+            infoJugador = infoJugador + "[" + i + "]" + this.getMano().get(i-1) + ",";
         }
         return infoJugador;
     }
