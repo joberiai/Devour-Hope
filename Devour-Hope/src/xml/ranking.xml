@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ganadores SYSTEM "ganadores.dtd" >
+<ganadores>
+  <ganador>
+    <nombre>Javi</nombre>
+    <numVictorias>5</numVictorias>
+  </ganador>
+  
+  <ganador>
+    <nombre>Bea</nombre>
+    <numVictorias>2</numVictorias>
+  </ganador>
+  
+  <ganador>
+    <nombre>Maria</nombre>
+    <numVictorias>1</numVictorias>
+  </ganador>
+</ganadores>
