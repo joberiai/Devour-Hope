@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Baraja implements Serializable {
     private ArrayList<Carta> cartas;
@@ -26,6 +27,16 @@ public class Baraja implements Serializable {
         }
 
     }
+
+    // Getters/Setters
+    public List<Carta> getCartas(){
+        return this.cartas;
+    }
+    public void setCartas(ArrayList<Carta> listCartas){
+        this.cartas = listCartas;
+    }
+
+    // Metodos
     public Carta sacarCarta(){
         Carta carta = cartas.get(cartas.size() - 1);
         cartas.remove(cartas.size() - 1);

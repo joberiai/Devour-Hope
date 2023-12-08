@@ -31,12 +31,23 @@ public class Main {
                     System.out.println(j.getUsuario() + " roba carta");
                     j.ordenarMano();
                 } else {
-                    g.jugarCarta(j.elegirCarta());
+                    Carta c = j.elegirCarta();
+
+                    while (!g.puedeJugar(c)){
+                        if(j instanceof JugadorReal){
+                            System.out.println("Carta no jugable");
+                        }
+
+                        c = j.elegirCarta();
+                    }
+
+                    g.jugarCarta(c);
+                    j.getMano().remove(c);
                 }
 
                 if (i == g.getJugadores().size() - 1) {
                     i = -1;
-                    Game.turno++;
+                    g.incrementarTurno();
                 }
 
                 if(g.getBaraja().numCartas() == 0){

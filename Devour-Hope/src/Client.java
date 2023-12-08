@@ -16,27 +16,38 @@ public class Client {
             System.out.println("1. Juego contra bots");
             System.out.println("2. Juego offline");
             System.out.println("3. Juego online");
-            System.out.println("4. Salir");
+            System.out.println("4. Mostrar puntuación");
+            System.out.println("5. Salir");
 
             Scanner scan = new Scanner(System.in);
             int n = scan.nextInt();
-
 
             Game g;
 
             switch (n){
                 case 1:
-                    // Poner nombre usuario
-
+                    // Usuario contra bots
+                    g = new Game(2, 1);
+                    oos.writeObject(g);
+                    oos.reset();
+                    oos.flush();
 
 
 
                     break;
                 case 2:
-                    // Poner cantidad de jugadores
-                    g = new Game(2, 1);
+                    // Player vs Player en el mismo PC
+                    System.out.println("Dime el numero de jugadores");
+                    int i = scan.nextInt();
+
+                    g = new Game(0, i);
                     oos.writeObject(g);
+                    oos.reset();
                     oos.flush();
+
+                    while(!g.haAcabado()){
+
+                    }
 
                     break;
                 case 3:
@@ -54,7 +65,10 @@ public class Client {
 
 
                     break;
+                case 5:
 
+
+                    break;
             }
 
         } catch (UnknownHostException e) {

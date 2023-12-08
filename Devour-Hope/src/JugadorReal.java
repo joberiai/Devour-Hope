@@ -2,7 +2,10 @@ import java.io.Serializable;
 import java.util.Scanner;
 
 public class JugadorReal extends Jugador implements Serializable {
+    // Constructores
+    public JugadorReal(){
 
+    }
     public JugadorReal(String n) {
         super(n);
     }
@@ -23,16 +26,6 @@ public class JugadorReal extends Jugador implements Serializable {
 
         Carta c = this.getMano().get(i - 1);
 
-        while (!Game.puedeJugar(c)){
-            System.out.println("Carta no jugable");
-            System.out.println(this.toString());
-            System.out.println("Elige una carta para echar: ");
-
-            i = scan.nextInt();
-            c = this.getMano().get(i - 1);
-        }
-
-        this.getMano().remove(c);
         return c;
     }
 

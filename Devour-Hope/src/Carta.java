@@ -4,6 +4,9 @@ public class Carta implements Serializable {
     private int num;
     private String color;
 
+    public Carta(){
+
+    }
     public Carta(int n, String c){
         this.num = n;
         this.color = c;

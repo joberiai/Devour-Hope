@@ -11,7 +11,6 @@ public class Server {
 
             while (true){
                 try{
-
                     // Offline
                     Socket s = server.accept();
                     HiloOffline hilo = new HiloOffline(s);

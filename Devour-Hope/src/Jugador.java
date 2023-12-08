@@ -7,6 +7,10 @@ public abstract class Jugador implements Serializable {
     private String usuario;
     private ArrayList<Carta> mano;
 
+    // Constructores
+    public Jugador(){
+
+    }
     public Jugador(String n) {
         this.usuario = n;
         this.mano  = new ArrayList<>();
@@ -24,6 +28,9 @@ public abstract class Jugador implements Serializable {
     public ArrayList<Carta> getMano() {
         return this.mano;
     }
+    public void setMano(ArrayList<Carta> lMano){
+        this.mano = lMano;
+    }
 
     // Funciones
     public int numCartas() {
@@ -32,11 +39,6 @@ public abstract class Jugador implements Serializable {
 
     public boolean haGanado() {
         return mano.size() == 0;
-    }
-
-    public boolean poderjugar(Carta c) {
-        // return !Game.robar();
-        return true;
     }
 
     public boolean tieneCarta(Carta carta) {
@@ -54,7 +56,7 @@ public abstract class Jugador implements Serializable {
         String infoJugador = "Mano: ";
 
         for(int i = 1; i <= mano.size(); i ++){
-            infoJugador = infoJugador + "[" + i + "]" + this.getMano().get(i-1) + ",";
+            infoJugador = infoJugador + "[" + i + "]" + this.getMano().get(i-1) + " / ";
         }
         return infoJugador;
     }

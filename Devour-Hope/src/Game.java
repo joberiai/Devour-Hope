@@ -5,15 +5,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Game  implements Serializable {
-    private static List<Carta> cartasColocadas;
+    private List<Carta> cartasColocadas;
     private Baraja baraja;
     private List<Jugador> jugadores;
-    public static int turno = 1;
+    private int turno = 1;
 
+    // Constructor
+    public Game(){
+
+    }
     // Game offline
     public Game(String user, int numRobots){
         this.baraja = new Baraja();
-        this.cartasColocadas = new ArrayList<>();
+        cartasColocadas = new ArrayList<>();
         this.jugadores = new ArrayList<>();
 
         this.baraja.barajear();
@@ -33,7 +37,7 @@ public class Game  implements Serializable {
     // Game online
     public Game(int numRobots, int numReales) {
         this.baraja = new Baraja();
-        this.cartasColocadas = new ArrayList<>();
+        cartasColocadas = new ArrayList<>();
         this.jugadores = new ArrayList<>();
 
         this.baraja.barajear();
@@ -86,8 +90,8 @@ public class Game  implements Serializable {
         jugadores = list;
     }
 
-    public static int getTurno() {
-        return turno;
+    public int getTurno() {
+        return this.turno;
     }
 
     // Metodos
@@ -161,19 +165,22 @@ public class Game  implements Serializable {
         return false;
     }
 
-    public static boolean puedeJugar(Carta c){
+    public boolean puedeJugar(Carta c){
         return c.getNum() == obtenerUltimaCarta().getNum() ||
                 c.getColor() == obtenerUltimaCarta().getColor() ||
                 c.getNum() == 13;
     }
 
-    public static Carta obtenerUltimaCarta(){
+    public Carta obtenerUltimaCarta(){
         if (cartasColocadas.size() == 0){
             return null;
         }
         return cartasColocadas.get(cartasColocadas.size() - 1);
     }
 
+    public void incrementarTurno(){
+        this.turno ++;
+    }
     @Override
     public String toString() {
         return "Game:" + '\n' +

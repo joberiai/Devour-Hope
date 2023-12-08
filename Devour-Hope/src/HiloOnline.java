@@ -2,13 +2,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
 
-public class HiloOffline extends Thread{
+public class HiloOnline extends Thread{
+
     private Socket socket;
 
-    public HiloOffline(Socket s){
+    public HiloOnline(Socket s){
         this.socket = s;
     }
 
@@ -17,12 +16,7 @@ public class HiloOffline extends Thread{
             ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream())){
 
             Game g = (Game) ois.readObject();
-
-            while(!g.haAcabado()){
-
-
-
-            }
+            System.out.println(g.toString());
 
         }catch(IOException e){
             e.printStackTrace();
@@ -30,5 +24,4 @@ public class HiloOffline extends Thread{
             throw new RuntimeException(e);
         }
     }
-
 }
