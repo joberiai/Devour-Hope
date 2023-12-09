@@ -10,31 +10,16 @@ public class Game  implements Serializable {
     private List<Jugador> jugadores;
     private int turno = 1;
 
-    // Constructor
+    // Game online
     public Game(){
-
-    }
-    // Game offline
-    public Game(String user, int numRobots){
         this.baraja = new Baraja();
         cartasColocadas = new ArrayList<>();
         this.jugadores = new ArrayList<>();
 
-        this.baraja.barajear();
-
-        jugadores.add(new JugadorReal(user));
-
-        for (int i = 1; i <= numRobots; i++) {
-            jugadores.add(new JugadorRobot("Bot " + i));
-            for (int j = 1; j <= 7; j++) {
-                this.jugadores.get(i).getMano().add(baraja.sacarCarta());
-            }
-        }
-
         this.cartasColocadas.add(baraja.sacarCarta());
     }
 
-    // Game online
+    // Game offline
     public Game(int numRobots, int numReales) {
         this.baraja = new Baraja();
         cartasColocadas = new ArrayList<>();

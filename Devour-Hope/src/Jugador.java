@@ -71,7 +71,7 @@ public abstract class Jugador implements Serializable {
 
     // Métodos abstractos
 
-    public abstract Carta elegirCarta();
+    public abstract Carta elegirCarta(int i);
 
     public abstract void robarCarta(Carta c);
 

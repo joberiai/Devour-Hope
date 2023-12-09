@@ -16,68 +16,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class Server {
-    public static void main(String[] args) {
-        try(ServerSocket server = new ServerSocket(55555)){
-            ExecutorService pool = Executors.newCachedThreadPool();
+public class HiloUpdRanking {
+    private Socket socket;
+    private Jugador winner;
 
-            while (true){
-                try{
-                    // Offline
-                    Socket s = server.accept();
-                    ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-                    ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-
-                    int n = (Integer) ois.readObject();
-
-                    switch (n){
-                        case 1:
-                            // Offline
-
-                            break;
-                        case 2:
-                            // Offline
-
-                            break;
-                        case 3:
-                            // Online
-                            HiloOnline hiloOnline = new HiloOnline(s);
-
-                            pool.execute(hiloOnline);
-
-                            break;
-                        case 4:
-                            // Ranking
-                            HiloRanking hiloRanking = new HiloRanking(s, ois, oos);
-
-                            pool.execute(hiloRanking);
-
-                            break;
-                        case 5:
-
-
-                            break;
-                    }
-
-                    //s.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public HiloUpdRanking(Socket s, Jugador j){
+        this.socket = s;
+        this.winner = j;
     }
 
-    public static void updRanking(Jugador winner){
+    public void run(){
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -87,12 +37,12 @@ public class Server {
             NodeList list = root.getElementsByTagName("ganador");
 
             boolean cambiado = false;
-            if(winner instanceof JugadorReal){
+            if(this.winner instanceof JugadorReal){
                 int i = 0;
                 while (i < list.getLength() && !cambiado){
                     Element ganador = (Element) list.item(i);
 
-                    if (ganador.getElementsByTagName("nombre").item(0).getTextContent() == winner.getUsuario()){
+                    if (ganador.getElementsByTagName("nombre").item(0).getTextContent() == this.winner.getUsuario()){
                         int vict = Integer.parseInt(ganador.getElementsByTagName("numVictorias").item(0).getTextContent());
                         vict ++;
 
@@ -108,7 +58,7 @@ public class Server {
                     Element name = doc.createElement("nombre");
                     Element nVict = doc.createElement("numVictorias");
 
-                    name.setTextContent(winner.getUsuario());
+                    name.setTextContent(this.winner.getUsuario());
                     nVict.setTextContent("1");
 
                     root.appendChild(newGan);

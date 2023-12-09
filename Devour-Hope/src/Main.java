@@ -31,14 +31,16 @@ public class Main {
                     System.out.println(j.getUsuario() + " roba carta");
                     j.ordenarMano();
                 } else {
-                    Carta c = j.elegirCarta();
+                    int num = 0;
+                    Carta c = j.elegirCarta(num);
 
                     while (!g.puedeJugar(c)){
                         if(j instanceof JugadorReal){
                             System.out.println("Carta no jugable");
                         }
 
-                        c = j.elegirCarta();
+                        num ++;
+                        c = j.elegirCarta(num);
                     }
 
                     g.jugarCarta(c);

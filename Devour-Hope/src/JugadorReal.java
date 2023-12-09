@@ -10,7 +10,7 @@ public class JugadorReal extends Jugador implements Serializable {
         super(n);
     }
 
-    public Carta elegirCarta(){
+    public Carta elegirCarta(int num){
         System.out.println(this.toString());
 
         System.out.println("Elige una carta para echar: ");

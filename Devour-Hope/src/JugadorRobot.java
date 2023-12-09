@@ -10,20 +10,8 @@ public class JugadorRobot extends Jugador implements Serializable {
     }
 
     @Override
-    public Carta elegirCarta() {
-        Carta c = null;
-
-        for (int i = 0, n = this.numCartas(); i < n; i++) {
-            c = this.getMano().get(i);
-
-
-            System.out.println("Juego carta");
-
-            return c;
-
-        }
-
-        return c;
+    public Carta elegirCarta(int i) {
+        return this.getMano().get(i);
     }
 
     @Override
