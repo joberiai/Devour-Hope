@@ -32,17 +32,12 @@ public class HiloOnline extends Thread{
                 System.out.println("Fallo");
             }
 
+            while (!g.haAcabado()) {
+                oos.writeObject(g);
+                oos.flush();
 
-            for (int i = 0, n = g.getJugadores().size(); i < n; i++) {
-                if (!g.haAcabado()) {
-                    oos.writeObject(g);
-                    oos.flush();
-
-                } else {
-                    i = 4;
-                }
+                g = (Game) ois.readObject();
             }
-
 
         }catch(IOException e){
             e.printStackTrace();

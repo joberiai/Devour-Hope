@@ -61,14 +61,54 @@ public class Client {
                     String u = scanner.nextLine();
                     if(u != null){
                         Jugador jug = new JugadorReal(u);
-                        oos.reset();
                         oos.writeObject(jug);
                         oos.flush();
                     }
 
-                    Game game = (Game) ois.readObject();
+                    g = (Game) ois.readObject();
+                    for (int j = 0; j < g.getJugadores().size(); j++) {
 
-                    System.out.println(game.toString());
+                        if (!g.haAcabado()) {
+                            Jugador newJ = g.getJugadores().get(j);
+
+                            System.out.println("Turno " + g.getTurno());
+                            System.out.println("Turno de " + newJ.getUsuario());
+                            System.out.println("Última carta: " + g.obtenerUltimaCarta());
+
+                            if (g.robar(j)) {
+                                if(newJ.getUsuario().equals(u)){
+                                    System.out.println("No tienes carta para jugar (Escribe 'Robar' y pulsa intro)");
+                                    scanner.reset();
+                                    scanner.nextLine();
+                                }
+
+                                newJ.robarCarta(g.getBaraja().sacarCarta());
+                                System.out.println(newJ.getUsuario() + " roba carta");
+                                newJ.ordenarMano();
+                            } else {
+                                if (newJ.getUsuario().equals(u)){
+                                    Carta c = newJ.elegirCarta(0);
+
+                                    while (!g.puedeJugar(c)){
+                                        System.out.println("Carta no jugable");
+
+                                        c = newJ.elegirCarta(0);
+                                    }
+
+                                    System.out.println(newJ.getUsuario() + " juega carta");
+                                    g.jugarCarta(c);
+                                    newJ.getMano().remove(c);
+                                }
+                            }
+
+                        } else {
+                            j = 4;
+                        }
+
+                        oos.writeObject(g);
+                        oos.flush();
+                    }
+
 
                     break;
                 case 4:

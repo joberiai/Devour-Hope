@@ -16,6 +16,8 @@ public class Game  implements Serializable {
         cartasColocadas = new ArrayList<>();
         this.jugadores = new ArrayList<>();
 
+        this.baraja.barajear();
+
         this.cartasColocadas.add(baraja.sacarCarta());
     }
 
