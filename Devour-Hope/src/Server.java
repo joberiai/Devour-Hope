@@ -25,8 +25,7 @@ import java.util.concurrent.Executors;
 public class Server {
     public static void main(String[] args) {
         try(ServerSocket server = new ServerSocket(55555)){
-            CyclicBarrier barrera = new CyclicBarrier(4);
-            ExecutorService pool = Executors.newFixedThreadPool(4);
+            ExecutorService pool = Executors.newCachedThreadPool();
 
             while (true){
                 try{
@@ -48,7 +47,8 @@ public class Server {
                             break;
                         case 3:
                             // Online
-                            HiloOnline hiloOnline = new HiloOnline(s, ois, oos, barrera);
+                            oos.reset();
+                            HiloOnline hiloOnline = new HiloOnline(s, ois, oos);
 
                             pool.execute(hiloOnline);
 

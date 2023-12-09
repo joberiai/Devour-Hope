@@ -10,13 +10,11 @@ public class HiloOnline extends Thread{
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    private CyclicBarrier barrera;
 
-    public HiloOnline(Socket s, ObjectInputStream ois, ObjectOutputStream oos, CyclicBarrier b){
+    public HiloOnline(Socket s, ObjectInputStream ois, ObjectOutputStream oos){
         this.socket = s;
         this.ois = ois;
         this.oos = oos;
-        this.barrera = b;
     }
 
     public void run(){
