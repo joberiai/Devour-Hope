@@ -61,6 +61,7 @@ public class Client {
                     String u = scanner.nextLine();
                     if(u != null){
                         Jugador jug = new JugadorReal(u);
+                        oos.reset();
                         oos.writeObject(jug);
                         oos.flush();
                     }
