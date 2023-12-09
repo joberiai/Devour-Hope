@@ -101,14 +101,27 @@ public class Client {
                                 }
                             }
 
+                            if (j == g.getJugadores().size() - 1) {
+                                j = -1;
+                                g.incrementarTurno();
+                            }
+
+                            if(g.getBaraja().numCartas() == 0){
+                                g.setBaraja(new Baraja());
+                            }
+
                         } else {
                             j = 4;
                         }
 
                         oos.writeObject(g);
                         oos.flush();
+
                     }
 
+                    if (g.haAcabado()) {
+                        System.out.println("Ha ganado " + g.ganador().getUsuario() + "!");
+                    }
 
                     break;
                 case 4:
