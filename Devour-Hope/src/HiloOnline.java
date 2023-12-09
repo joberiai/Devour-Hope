@@ -25,11 +25,13 @@ public class HiloOnline extends Thread{
             oos.writeObject("--- Juego creado ---\n");
             oos.flush();
 
-            Object j = ois.readObject();
-            if (j instanceof Jugador){
-                g.addJugador((Jugador) j);
-            }else{
-                System.out.println("Fallo");
+            while (g.getJugadores().size() < 2){
+                Object j = ois.readObject();
+                if (j instanceof Jugador){
+                    g.addJugador((Jugador) j);
+                }else{
+                    System.out.println("Fallo");
+                }
             }
 
             while (!g.haAcabado()) {
