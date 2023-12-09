@@ -125,25 +125,20 @@ public class Game  implements Serializable {
         return true;
     }
 
+    public void addJugador(Jugador j){
+        for (int i = 1; i <= 7; i ++) {
+            j.getMano().add(baraja.sacarCarta());
+        }
+
+        this.jugadores.add(j);
+    }
+
     public boolean jugarCarta(Carta c) {
         if(this.obtenerUltimaCarta().getColor() == c.getColor() ||
                 this.obtenerUltimaCarta().getNum() == c.getNum()){
+
             this.getCartasColocadas().add(c);
-
-            if (c.getNum() == 9){
-
-            }else if (c.getNum() == 10){
-
-            }else if (c.getNum() == 11){
-
-            }else if (c.getNum() == 12){
-
-            }
-
             return true;
-        }
-
-        if (c.getNum() == 13){
 
         }
 

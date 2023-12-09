@@ -51,7 +51,20 @@ public class Client {
 
                     break;
                 case 3:
-                    // Poner cantidad de jugadores
+                    // Crear jugador para empezar partida
+                    Object obj = ois.readObject();
+                    System.out.println((String) obj);
+
+                    Scanner scanner = new Scanner(System.in);
+
+                    System.out.println("Dime tu nombre de usuario: ");
+                    String u = scanner.nextLine();
+                    if(u != null){
+                        Jugador jug = new JugadorReal(u);
+                        oos.writeObject(jug);
+                        oos.flush();
+                    }
+
 
 
                     break;
