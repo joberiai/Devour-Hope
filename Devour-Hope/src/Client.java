@@ -65,7 +65,9 @@ public class Client {
                         oos.flush();
                     }
 
+                    Game game = (Game) ois.readObject();
 
+                    System.out.println(game.toString());
 
                     break;
                 case 4:

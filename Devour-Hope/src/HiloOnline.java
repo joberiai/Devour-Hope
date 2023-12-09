@@ -25,7 +25,6 @@ public class HiloOnline extends Thread{
             oos.writeObject("--- Juego creado ---\n");
             oos.flush();
 
-            barrera.await();
             while (g.getJugadores().size() < 2){
                 Object j =  ois.readObject();
                 if (j instanceof Jugador){
@@ -37,6 +36,8 @@ public class HiloOnline extends Thread{
 
             for (int i = 0, n = g.getJugadores().size(); i < n; i++) {
                 if (!g.haAcabado()) {
+                    oos.writeObject(g);
+                    oos.flush();
 
                 } else {
                     i = 4;
@@ -47,10 +48,6 @@ public class HiloOnline extends Thread{
         }catch(IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (BrokenBarrierException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
