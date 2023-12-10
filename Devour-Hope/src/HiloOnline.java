@@ -34,12 +34,7 @@ public class HiloOnline extends Thread{
             }
 
             barrera.await();
-            while (!g.haAcabado()) {
-                oos.writeObject(g);
-                oos.flush();
 
-                g = (Game) ois.readObject();
-            }
 
         }catch(IOException e){
             e.printStackTrace();

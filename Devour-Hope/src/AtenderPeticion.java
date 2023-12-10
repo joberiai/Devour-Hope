@@ -38,6 +38,13 @@ public class AtenderPeticion extends Thread {
                     HiloOnline hiloOnline = new HiloOnline(socket, ois, oos, g, barrier);
                     hiloOnline.start();
 
+                    while (!g.haAcabado()) {
+                        oos.writeObject(g);
+                        oos.flush();
+
+                        g = (Game) ois.readObject();
+                    }
+
                     break;
                 case 4:
                     // Ranking
@@ -52,6 +59,8 @@ public class AtenderPeticion extends Thread {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }
