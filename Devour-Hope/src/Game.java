@@ -142,7 +142,7 @@ public class Game  implements Serializable {
             this.getCartasColocadas().add(c);
             Scanner scan = new Scanner(System.in);
 
-            if(c.getNum() == 9){
+            if(c.getNum() == 9 || c.getNum() == 10){
                 if(j instanceof JugadorReal){
                     System.out.println("Dime que numero quieres en la carta: ");
                     int i = scan.nextInt();
@@ -156,21 +156,6 @@ public class Game  implements Serializable {
                     this.obtenerUltimaCarta().setNum(i);
                 }else{
                     this.obtenerUltimaCarta().setNum(7);
-                }
-            }if(c.getNum() == 10){
-                if(j instanceof JugadorReal){
-                    System.out.println("Dime que color quieres en la carta: ");
-                    String s = scan.nextLine();
-
-                    while(!s.equals("Rojo") && !s.equals("Azul") && !s.equals("Amarillo") && !s.equals("Verde")){
-                        System.out.println("Dame un color valido");
-                        System.out.println("Dime que color quieres en la carta: ");
-                        s = scan.nextLine();
-                    }
-
-                    this.obtenerUltimaCarta().setColor(s);
-                }else{
-                    this.obtenerUltimaCarta().setColor("Rojo");
                 }
             }if(c.getNum() == 11){
                 if(j instanceof JugadorReal){
