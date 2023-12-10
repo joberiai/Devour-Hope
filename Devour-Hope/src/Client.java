@@ -74,6 +74,9 @@ public class Client {
                                     System.out.println("No tienes carta para jugar (Escribe 'Robar' y pulsa intro)");
                                     scanner.reset();
                                     scanner.nextLine();
+
+                                    oos.writeObject(g);
+                                    oos.flush();
                                 }
 
                                 newJ.robarCarta(g.getBaraja().sacarCarta());
@@ -91,6 +94,9 @@ public class Client {
 
                                     g.jugarCarta(newJ, c);
                                     newJ.getMano().remove(c);
+
+                                    oos.writeObject(g);
+                                    oos.flush();
                                 }
 
                                 System.out.println(newJ.getUsuario() + " juega carta");
@@ -109,8 +115,7 @@ public class Client {
                             j = 4;
                         }
 
-                        oos.writeObject(g);
-                        oos.flush();
+                        g = (Game) ois.readObject();
                     }
 
                     if (g.haAcabado()) {
