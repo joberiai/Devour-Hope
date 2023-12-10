@@ -25,9 +25,13 @@ public class HiloOnline extends Thread{
             while (!g.haAcabado()) {
                 oos.get(0).writeObject(g);
                 oos.get(0).flush();
+                oos.get(1).writeObject(g);
+                oos.get(1).flush();
 
                 g = (Game) ois.get(1).readObject();
 
+                oos.get(0).writeObject(g);
+                oos.get(0).flush();
                 oos.get(1).writeObject(g);
                 oos.get(1).flush();
 
