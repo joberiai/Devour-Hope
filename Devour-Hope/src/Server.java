@@ -14,32 +14,26 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
     public static void main(String[] args) {
-        try(ServerSocket server = new ServerSocket(60000)){
+        try(ServerSocket server = new ServerSocket(55560)){
             CyclicBarrier b = new CyclicBarrier(2);
             ExecutorService pool = Executors.newFixedThreadPool(2);
 
             Game g = new Game();
-            List<ObjectInputStream> aOIS = new ArrayList<>();
-            List<ObjectOutputStream> aOOS = new ArrayList<>();
 
             while (true){
                 try{
                     // Offline
                     Socket s = server.accept();
 
-                    AtenderPeticion pet = new AtenderPeticion(s, g, b, aOIS, aOOS);
+                    AtenderPeticion pet = new AtenderPeticion(s, g, b);
                     pool.execute(pet);
                 } catch (IOException e) {
                     e.printStackTrace();
