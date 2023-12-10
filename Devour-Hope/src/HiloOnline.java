@@ -41,7 +41,7 @@ public class HiloOnline extends Thread{
         }catch(IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

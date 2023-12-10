@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) {
-        try (Socket s = new Socket("localhost", 55555);
+        try (Socket s = new Socket("localhost", 55555); // Cambio IP --> Conexion remota
              ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
              ObjectInputStream ois = new ObjectInputStream(s.getInputStream())) {
 
@@ -145,11 +145,11 @@ public class Client {
             oos.close();
             ois.close();
         } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 

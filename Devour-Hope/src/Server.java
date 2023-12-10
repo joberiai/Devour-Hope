@@ -30,46 +30,11 @@ public class Server {
                 try{
                     // Offline
                     Socket s = server.accept();
-                    ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-                    ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 
-                    int n = (Integer) ois.readObject();
-
-                    switch (n){
-                        case 1:
-                            // Offline
-
-                            break;
-                        case 2:
-                            // Offline
-
-                            break;
-                        case 3:
-                            // Online
-                            oos.reset();
-
-                            Game g = new Game();
-                            HiloOnline hiloOnline = new HiloOnline(s, ois, oos, g);
-                            hiloOnline.start();
-
-                            break;
-                        case 4:
-                            // Ranking
-                            HiloRanking hiloRanking = new HiloRanking(s, ois, oos);
-
-                            hiloRanking.start();
-
-                            break;
-                        case 5:
-
-                            break;
-                    }
-
-                    //s.close();
+                    AtenderPeticion pet = new AtenderPeticion(s);
+                    pet.start();
                 } catch (IOException e) {
                     e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
                 }
             }
 
