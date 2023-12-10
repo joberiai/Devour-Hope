@@ -5,9 +5,11 @@ import java.net.Socket;
 
 public class AtenderPeticion extends Thread {
     private Socket socket;
+    private Game g;
 
-    public AtenderPeticion(Socket s) {
+    public AtenderPeticion(Socket s, Game game) {
         this.socket = s;
+        this.g = game;
     }
 
     public void run() {
@@ -30,7 +32,6 @@ public class AtenderPeticion extends Thread {
                     // Online
                     oos.reset();
 
-                    Game g = new Game();
                     HiloOnline hiloOnline = new HiloOnline(socket, ois, oos, g);
                     hiloOnline.start();
 

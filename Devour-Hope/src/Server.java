@@ -14,12 +14,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Server {
     public static void main(String[] args) {
@@ -31,7 +27,8 @@ public class Server {
                     // Offline
                     Socket s = server.accept();
 
-                    AtenderPeticion pet = new AtenderPeticion(s);
+                    Game g = new Game();
+                    AtenderPeticion pet = new AtenderPeticion(s, g);
                     pet.start();
                 } catch (IOException e) {
                     e.printStackTrace();
