@@ -26,12 +26,13 @@ public class Server {
             CyclicBarrier b = new CyclicBarrier(2);
             ExecutorService pool = Executors.newFixedThreadPool(2);
 
+            Game g = new Game();
+
             while (true){
                 try{
                     // Offline
                     Socket s = server.accept();
 
-                    Game g = new Game();
                     AtenderPeticion pet = new AtenderPeticion(s, g, b);
                     pool.execute(pet);
                 } catch (IOException e) {

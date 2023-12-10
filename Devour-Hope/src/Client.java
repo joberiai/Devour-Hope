@@ -89,10 +89,11 @@ public class Client {
                                         c = newJ.elegirCarta(0);
                                     }
 
-                                    System.out.println(newJ.getUsuario() + " juega carta");
                                     g.jugarCarta(newJ, c);
                                     newJ.getMano().remove(c);
                                 }
+
+                                System.out.println(newJ.getUsuario() + " juega carta");
                             }
 
                             if (j == g.getJugadores().size() - 1) {
@@ -110,7 +111,6 @@ public class Client {
 
                         oos.writeObject(g);
                         oos.flush();
-
                     }
 
                     if (g.haAcabado()) {
