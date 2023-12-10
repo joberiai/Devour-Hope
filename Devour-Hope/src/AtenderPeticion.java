@@ -2,14 +2,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.concurrent.CyclicBarrier;
 
 public class AtenderPeticion extends Thread {
     private Socket socket;
     private Game g;
+    private CyclicBarrier barrier;
 
-    public AtenderPeticion(Socket s, Game game) {
+    public AtenderPeticion(Socket s, Game game, CyclicBarrier b) {
         this.socket = s;
         this.g = game;
+        this.barrier = b;
     }
 
     public void run() {
@@ -17,7 +20,7 @@ public class AtenderPeticion extends Thread {
             ObjectInputStream ois = new ObjectInputStream(this.socket.getInputStream());
             ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
 
-            int n = (Integer) ois.readObject();
+            int n = ois.readInt();
 
             switch (n) {
                 case 1:
@@ -32,7 +35,7 @@ public class AtenderPeticion extends Thread {
                     // Online
                     oos.reset();
 
-                    HiloOnline hiloOnline = new HiloOnline(socket, ois, oos, g);
+                    HiloOnline hiloOnline = new HiloOnline(socket, ois, oos, g, barrier);
                     hiloOnline.start();
 
                     break;
@@ -48,8 +51,6 @@ public class AtenderPeticion extends Thread {
                     break;
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

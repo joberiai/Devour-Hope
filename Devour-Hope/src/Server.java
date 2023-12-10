@@ -16,11 +16,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
     public static void main(String[] args) {
-        try(ServerSocket server = new ServerSocket(55555)){
-            // ExecutorService pool = Executors.newCachedThreadPool();
+        try(ServerSocket server = new ServerSocket(55560)){
+            CyclicBarrier b = new CyclicBarrier(2);
+            ExecutorService pool = Executors.newFixedThreadPool(2);
 
             while (true){
                 try{
@@ -28,8 +32,8 @@ public class Server {
                     Socket s = server.accept();
 
                     Game g = new Game();
-                    AtenderPeticion pet = new AtenderPeticion(s, g);
-                    pet.start();
+                    AtenderPeticion pet = new AtenderPeticion(s, g, b);
+                    pool.execute(pet);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

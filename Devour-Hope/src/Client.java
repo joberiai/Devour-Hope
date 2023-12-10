@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) {
-        try (Socket s = new Socket("localhost", 55555); // Cambio IP --> Conexion remota
+        try (Socket s = new Socket("localhost", 55560); // Cambio IP --> Conexion remota
              ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
              ObjectInputStream ois = new ObjectInputStream(s.getInputStream())) {
 
@@ -26,7 +26,7 @@ public class Client {
             Scanner scan = new Scanner(System.in);
             int n = scan.nextInt();
 
-            oos.writeObject(n);
+            oos.writeInt(n);
             oos.flush();
 
             Game g = null;
@@ -47,8 +47,7 @@ public class Client {
                     break;
                 case 3:
                     // Crear jugador para empezar partida
-                    Object obj = ois.readObject();
-                    System.out.println((String) obj);
+                    System.out.println(ois.readLine());
 
                     Scanner scanner = new Scanner(System.in);
 
