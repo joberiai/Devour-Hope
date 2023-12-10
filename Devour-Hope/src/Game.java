@@ -119,7 +119,7 @@ public class Game  implements Serializable {
             Carta c1 = this.jugadores.get(numJug).getMano().get(i);
             Carta c2 = this.obtenerUltimaCarta();
 
-            if (c1.getNum() == c2.getNum() || c1.getColor() == c2.getColor() || c1.getNum() == 13){
+            if (c1.getNum() == c2.getNum() || c1.getColor().equals(c2.getColor()) || c1.getNum() == 13){
                 return false;
             }
         }
@@ -135,13 +135,68 @@ public class Game  implements Serializable {
         this.jugadores.add(j);
     }
 
-    public boolean jugarCarta(Carta c) {
+    public boolean jugarCarta(Jugador j, Carta c) {
         if(this.obtenerUltimaCarta().getColor() == c.getColor() ||
                 this.obtenerUltimaCarta().getNum() == c.getNum()){
 
             this.getCartasColocadas().add(c);
-            return true;
+            Scanner scan = new Scanner(System.in);
 
+            if(c.getNum() == 9){
+                if(j instanceof JugadorReal){
+                    System.out.println("Dime que numero quieres en la carta: ");
+                    int i = scan.nextInt();
+
+                    while(i > 12 || i < 1){
+                        System.out.println("Dame un numero valido");
+                        System.out.println("Dime que numero quieres en la carta: ");
+                        i = scan.nextInt();
+                    }
+
+                    this.obtenerUltimaCarta().setNum(i);
+                }else{
+                    this.obtenerUltimaCarta().setNum(7);
+                }
+            }if(c.getNum() == 10){
+                if(j instanceof JugadorReal){
+                    System.out.println("Dime que color quieres en la carta: ");
+                    String s = scan.nextLine();
+
+                    while(!s.equals("Rojo") && !s.equals("Azul") && !s.equals("Amarillo") && !s.equals("Verde")){
+                        System.out.println("Dame un color valido");
+                        System.out.println("Dime que color quieres en la carta: ");
+                        s = scan.nextLine();
+                    }
+
+                    this.obtenerUltimaCarta().setColor(s);
+                }else{
+                    this.obtenerUltimaCarta().setColor("Rojo");
+                }
+            }if(c.getNum() == 11){
+                if(j instanceof JugadorReal){
+                    System.out.println("Escribe 'Si' en caso que quieras una carta comodin: ");
+                    String s = scan.nextLine();
+
+                    if(s.equals("Si") || s.equals("si")){
+                        j.robarCarta(new CartaComodin(13));
+                        j.ordenarMano();
+                    }
+                }else{
+                    j.robarCarta(new CartaComodin(13));
+                }
+            }if(c.getNum() == 12){
+                if(j instanceof JugadorReal){
+                    System.out.println("Dime que carta te quieres descartar: ");
+                    int i = scan.nextInt();
+
+                    j.getMano().remove(i - 1);
+                    j.ordenarMano();
+                }else{
+                    j.getMano().remove(0);
+                }
+            }
+
+            return true;
         }
 
         return false;
@@ -149,7 +204,7 @@ public class Game  implements Serializable {
 
     public boolean puedeJugar(Carta c){
         return c.getNum() == obtenerUltimaCarta().getNum() ||
-                c.getColor() == obtenerUltimaCarta().getColor() ||
+                c.getColor().equals(obtenerUltimaCarta().getColor()) ||
                 c.getNum() == 13;
     }
 

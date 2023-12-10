@@ -18,7 +18,7 @@ public class JugadorReal extends Jugador implements Serializable {
 
         int i = scan.nextInt();
 
-        while (i <= 0){
+        while (!(i > 0 && i <= this.getMano().size())){
             System.out.println("No es valido, escribe de nuevo");
             System.out.println("Elige una carta para echar: ");
             i = scan.nextInt();

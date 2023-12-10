@@ -43,7 +43,7 @@ public class Main {
                         c = j.elegirCarta(num);
                     }
 
-                    g.jugarCarta(c);
+                    g.jugarCarta(j, c);
                     j.getMano().remove(c);
                 }
 

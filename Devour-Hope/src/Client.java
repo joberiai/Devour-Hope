@@ -1,12 +1,7 @@
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -96,7 +91,7 @@ public class Client {
                                     }
 
                                     System.out.println(newJ.getUsuario() + " juega carta");
-                                    g.jugarCarta(c);
+                                    g.jugarCarta(newJ, c);
                                     newJ.getMano().remove(c);
                                 }
                             }
@@ -192,7 +187,7 @@ public class Client {
                         c = j.elegirCarta(num);
                     }
 
-                    g.jugarCarta(c);
+                    g.jugarCarta(j, c);
                     j.getMano().remove(c);
                 }
 

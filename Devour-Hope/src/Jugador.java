@@ -56,7 +56,7 @@ public abstract class Jugador implements Serializable {
         String infoJugador = "Mano: ";
 
         for(int i = 1; i <= mano.size(); i ++){
-            infoJugador = infoJugador + "[" + i + "]" + this.getMano().get(i-1) + " / ";
+            infoJugador = infoJugador + "[" + i + "]" + this.getMano().get(i-1).toString() + " / ";
         }
         return infoJugador;
     }
