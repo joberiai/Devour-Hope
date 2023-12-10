@@ -48,10 +48,9 @@ public class Server {
                             // Online
                             oos.reset();
 
-                            for (int i = 0; i < 2; i ++){
-                                HiloOnline hiloOnline = new HiloOnline(s, ois, oos);
-                                hiloOnline.start();
-                            }
+                            Game g = new Game();
+                            HiloOnline hiloOnline = new HiloOnline(s, ois, oos, g);
+                            hiloOnline.start();
 
                             break;
                         case 4:

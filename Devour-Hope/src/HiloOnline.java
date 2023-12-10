@@ -8,27 +8,28 @@ public class HiloOnline extends Thread{
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
+    private Game g;
 
-    public HiloOnline(Socket s, ObjectInputStream ois, ObjectOutputStream oos){
+    public HiloOnline(Socket s, ObjectInputStream ois, ObjectOutputStream oos, Game game){
         this.socket = s;
         this.ois = ois;
         this.oos = oos;
+        this.g = game;
     }
 
     public void run(){
         try{
-            Game g = new Game();
             oos.writeObject("--- Juego creado ---\n");
             oos.flush();
 
-            Object j = ois.readObject();
-            if (j instanceof Jugador){
-                g.addJugador((Jugador) j);
-            }else{
-                System.out.println("Fallo");
+            while (g.getJugadores().size() < 2){
+                Object j = ois.readObject();
+                if (j instanceof Jugador){
+                    g.addJugador((Jugador) j);
+                }else{
+                    System.out.println("Fallo");
+                }
             }
-
-
 
             while (!g.haAcabado()) {
                 oos.writeObject(g);
