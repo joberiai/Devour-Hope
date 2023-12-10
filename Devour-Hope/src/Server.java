@@ -18,15 +18,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
     public static void main(String[] args) {
         try(ServerSocket server = new ServerSocket(55555)){
-            CyclicBarrier barrera = new CyclicBarrier(2);
-            ExecutorService pool = Executors.newFixedThreadPool(2);
+            // ExecutorService pool = Executors.newCachedThreadPool();
 
             while (true){
                 try{
@@ -51,8 +49,8 @@ public class Server {
                             oos.reset();
 
                             for (int i = 0; i < 2; i ++){
-                                HiloOnline hiloOnline = new HiloOnline(s, ois, oos, barrera);
-                                pool.execute(hiloOnline);
+                                HiloOnline hiloOnline = new HiloOnline(s, ois, oos);
+                                hiloOnline.start();
                             }
 
                             break;
@@ -60,7 +58,7 @@ public class Server {
                             // Ranking
                             HiloRanking hiloRanking = new HiloRanking(s, ois, oos);
 
-                            pool.execute(hiloRanking);
+                            hiloRanking.start();
 
                             break;
                         case 5:
