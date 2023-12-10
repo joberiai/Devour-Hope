@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) {
-        try (Socket s = new Socket("localhost", 55560); // Cambio IP --> Conexion remota
+        try (Socket s = new Socket("localhost", 60000); // Cambio IP --> Conexion remota
              ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
              ObjectInputStream ois = new ObjectInputStream(s.getInputStream())) {
 
