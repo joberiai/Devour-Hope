@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
     public static void main(String[] args) {
-        try(ServerSocket server = new ServerSocket(55560)){
+        try(ServerSocket server = new ServerSocket(60000)){
             CyclicBarrier b = new CyclicBarrier(2);
             ExecutorService pool = Executors.newFixedThreadPool(2);
 
