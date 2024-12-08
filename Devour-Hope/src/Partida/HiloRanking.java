@@ -1,3 +1,4 @@
+package Partida;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -25,7 +26,7 @@ public class HiloRanking extends Thread{
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse("src\\xml\\ranking.xml");
+            Document doc = docBuilder.parse("src/xml/ranking.xml");
 
             oos.writeObject(doc);
             oos.flush();

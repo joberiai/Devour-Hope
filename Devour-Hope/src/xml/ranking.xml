@@ -2,17 +2,22 @@
 <!DOCTYPE ganadores SYSTEM "ganadores.dtd" >
 <ganadores>
   <ganador>
-    <nombre>Javi</nombre>
+    <nombre>Jota</nombre>
     <numVictorias>5</numVictorias>
   </ganador>
   
   <ganador>
-    <nombre>Bea</nombre>
-    <numVictorias>2</numVictorias>
+    <nombre>Mamá</nombre>
+    <numVictorias>4</numVictorias>
   </ganador>
   
   <ganador>
-    <nombre>Maria</nombre>
+    <nombre>Bea</nombre>
+    <numVictorias>3</numVictorias>
+  </ganador>
+  
+  <ganador>
+    <nombre>Papá</nombre>
     <numVictorias>1</numVictorias>
   </ganador>
 </ganadores>

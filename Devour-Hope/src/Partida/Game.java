@@ -1,8 +1,16 @@
+package Partida;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+
+import Juego.Baraja;
+import Juego.Carta;
+import Juego.CartaComodin;
+import Juego.Jugador;
+import Juego.JugadorReal;
+import Juego.JugadorRobot;
 
 public class Game  implements Serializable {
     private List<Carta> cartasColocadas;

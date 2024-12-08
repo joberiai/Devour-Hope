@@ -1,4 +1,12 @@
+package Partida;
 import java.util.Scanner;
+
+import Juego.Baraja;
+import Juego.Carta;
+import Juego.Jugador;
+import Juego.JugadorReal;
+
+// Este fue para probar que la partida se jugara correctamente
 
 public class Main {
     public static void main(String[] args) {

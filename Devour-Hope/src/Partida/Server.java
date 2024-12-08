@@ -1,7 +1,11 @@
+package Partida;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import Juego.Jugador;
+import Juego.JugadorReal;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,7 +26,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
     public static void main(String[] args) {
-        try(ServerSocket server = new ServerSocket(60000)){
+        try(ServerSocket server = new ServerSocket(60006)){
             CyclicBarrier b = new CyclicBarrier(2);
             ExecutorService pool = Executors.newFixedThreadPool(2);
 

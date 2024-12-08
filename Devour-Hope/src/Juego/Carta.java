@@ -1,3 +1,4 @@
+package Juego;
 import java.io.Serializable;
 
 public class Carta implements Serializable {

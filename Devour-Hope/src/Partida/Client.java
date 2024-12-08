@@ -1,7 +1,15 @@
+package Partida;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import Juego.Baraja;
+import Juego.Carta;
+import Juego.Jugador;
+import Juego.JugadorReal;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,9 +17,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 public class Client {
     public static void main(String[] args) {
-        try (Socket s = new Socket("localhost", 60000); // Cambio IP --> Conexion remota
+        try (Socket s = new Socket("localhost", 60006); // Cambio IP --> Conexion remota
              ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
              ObjectInputStream ois = new ObjectInputStream(s.getInputStream())) {
 
@@ -124,21 +135,47 @@ public class Client {
 
                     break;
                 case 4:
-                    Document doc = (Document) ois.readObject();
+                    
+                    try {
+                    	Document doc = (Document) ois.readObject();
 
-                    Element root = doc.getDocumentElement();
+                        Element root = doc.getDocumentElement();
 
-                    NodeList list = root.getElementsByTagName("ganador");
+                        NodeList list = root.getElementsByTagName("ganador");
 
-                    System.out.println("--- RANKING DE VICTORIAS ---");
+                        String nombreGanador = "";
+                        int maxVictorias = 0;
 
-                    for (int j = 0; j < list.getLength(); j++) {
-                        Element ganador = (Element) list.item(j);
+                        System.out.println("Lista de ganadores:");
+                        System.out.println("-------------------");
 
-                        System.out.println("Jugador: " + ganador.getElementsByTagName("nombre").item(0).getTextContent() +
-                                "   Victorias: " + ganador.getElementsByTagName("numVictorias").item(0).getTextContent());
+                        // Recorro los nodos de los ganadores
+                        for (i = 0; i < list.getLength(); i++) {
+                            Node node = list.item(i);
+                            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                                Element element = (Element) node;
+
+                                String nombre = element.getElementsByTagName("nombre").item(0).getTextContent();
+                                int numVictorias = Integer.parseInt(element.getElementsByTagName("numVictorias").item(0).getTextContent());
+
+                                System.out.println(nombre + " - " + numVictorias + " victorias");
+
+                                // Actualizo el ganador máximo
+                                if (numVictorias > maxVictorias) {
+                                    maxVictorias = numVictorias;
+                                    nombreGanador = nombre;
+                                }
+                            }
+                        }
+
+                        // Mostrar el ganador con más victorias
+                        System.out.println("-------------------");
+                        System.out.println("El ganador con más victorias es: " + nombreGanador);
+                        System.out.println("Número de victorias: " + maxVictorias);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
+                    
                     break;
                 case 5:
 

@@ -1,3 +1,4 @@
+package Juego;
 import java.io.Serializable;
 
 public class JugadorRobot extends Jugador implements Serializable {
