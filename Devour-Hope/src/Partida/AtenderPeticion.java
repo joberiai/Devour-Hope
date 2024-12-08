@@ -3,17 +3,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.LinkedList;
 import java.util.concurrent.CyclicBarrier;
 
 public class AtenderPeticion extends Thread {
     private Socket socket;
     private Game g;
     private CyclicBarrier barrier;
+    private LinkedList<String> salas; 
 
-    public AtenderPeticion(Socket s, Game game, CyclicBarrier b) {
+    public AtenderPeticion(Socket s, Game game, CyclicBarrier b, LinkedList<String> rooms) {
         this.socket = s;
         this.g = game;
         this.barrier = b;
+        this.salas = rooms;
     }
 
     public void run() {
@@ -36,7 +39,7 @@ public class AtenderPeticion extends Thread {
                     // Online
                     oos.reset();
 
-                    HiloOnline hiloOnline = new HiloOnline(socket, ois, oos, g, barrier);
+                    HiloOnline hiloOnline = new HiloOnline(socket, ois, oos, g, barrier, salas);
                     hiloOnline.start();
 
                     break;

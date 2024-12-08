@@ -15,6 +15,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.security.Identity;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -22,10 +26,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class Client {
     public static void main(String[] args) {
-        try (Socket s = new Socket("localhost", 60006); // Cambio IP --> Conexion remota
+    	Scanner scan = null;
+    	
+    	try (Socket s = new Socket("localhost", 60006); // Cambio IP --> Conexion remota
              ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
              ObjectInputStream ois = new ObjectInputStream(s.getInputStream())) {
-
+    		
             // Menu inicial
             System.out.println("--- DEVOUR HOPE ---");
             System.out.println("1. Juego contra bots");
@@ -34,7 +40,7 @@ public class Client {
             System.out.println("4. Mostrar puntuación");
             System.out.println("5. Salir");
 
-            Scanner scan = new Scanner(System.in);
+            scan = new Scanner(System.in);
             int n = scan.nextInt();
 
             oos.writeInt(n);
@@ -58,81 +64,142 @@ public class Client {
                     break;
                 case 3:
                     // Crear jugador para empezar partida
-                    System.out.println(ois.readLine());
+                	boolean seguir = true; 
+                	boolean partidaEmpezada = false;
+                	
+                	do {
+                		System.out.println("¿Qué deseas hacer?");
+                		System.out.println("1. Crear una sala");
+                		System.out.println("2. Unirse a una sala");
+                		System.out.println("3. Salir");
+                		
+                		int select = scan.nextInt();
+                		
+                		LinkedList<String> salas = (LinkedList<String>) ois.readObject();
+                		
+                		switch (select) {
+						case 1: 
+							System.out.println("Dame la ip:");
+							int ipSala = scan.nextInt();
+							
+							System.out.println("Dame el puerto:");
+							int portSala = scan.nextInt();
+							
+							salas.add(ipSala + ":" + portSala);
+							
+							oos.writeObject("CREAR");
+							oos.writeObject(salas);
+							oos.flush();
+							
+							break;
+						case 2:	
+							System.out.println("--- SALAS DISPONIBLES ---");
+							
+							for (String sala : salas) {
+								System.out.println(sala);
+							}
+							
+							oos.writeObject("ENTRAR");
+							oos.flush();
+							
+							System.out.println("------------");
+							System.out.println("Elige la sala a la que quires acceder");
+							int idSala = scan.nextInt();
+							
+							oos.writeObject(idSala);
+							oos.flush();
+							
+							partidaEmpezada = true;
+							seguir = false;
+							
+							break;
+						case 3:
+							seguir = false;
+							
+							break;
+						default:
+							System.out.println("Elige una opción válida");
+						}
+                		
+                	}while(seguir);
+                	
+                	if(partidaEmpezada) {
+                		 System.out.println(ois.readLine());
 
-                    Scanner scanner = new Scanner(System.in);
+                         Scanner scanner = new Scanner(System.in);
 
-                    System.out.println("Dime tu nombre de usuario: ");
-                    String u = scanner.nextLine();
-                    if(u != null){
-                        Jugador jug = new JugadorReal(u);
-                        oos.writeObject(jug);
-                        oos.flush();
-                    }
+                         System.out.println("Dime tu nombre de usuario: ");
+                         String u = scanner.nextLine();
+                         if(u != null){
+                             Jugador jug = new JugadorReal(u);
+                             oos.writeObject(jug);
+                             oos.flush();
+                         }
 
-                    g = (Game) ois.readObject();
-                    for (int j = 0; j < g.getJugadores().size(); j++) {
+                         g = (Game) ois.readObject();
+                         for (int j = 0; j < g.getJugadores().size(); j++) {
 
-                        if (!g.haAcabado()) {
-                            Jugador newJ = g.getJugadores().get(j);
+                             if (!g.haAcabado()) {
+                                 Jugador newJ = g.getJugadores().get(j);
 
-                            System.out.println("Turno " + g.getTurno());
-                            System.out.println("Turno de " + newJ.getUsuario());
-                            System.out.println("Última carta: " + g.obtenerUltimaCarta());
+                                 System.out.println("Turno " + g.getTurno());
+                                 System.out.println("Turno de " + newJ.getUsuario());
+                                 System.out.println("Última carta: " + g.obtenerUltimaCarta());
 
-                            if (g.robar(j)) {
-                                if(newJ.getUsuario().equals(u)){
-                                    System.out.println("No tienes carta para jugar (Escribe 'Robar' y pulsa intro)");
-                                    scanner.reset();
-                                    scanner.nextLine();
+                                 if (g.robar(j)) {
+                                     if(newJ.getUsuario().equals(u)){
+                                         System.out.println("No tienes carta para jugar (Escribe 'Robar' y pulsa intro)");
+                                         scanner.reset();
+                                         scanner.nextLine();
 
-                                    oos.writeObject(g);
-                                    oos.flush();
-                                }
+                                         oos.writeObject(g);
+                                         oos.flush();
+                                     }
 
-                                newJ.robarCarta(g.getBaraja().sacarCarta());
-                                System.out.println(newJ.getUsuario() + " roba carta");
-                                newJ.ordenarMano();
-                            } else {
-                                if (newJ.getUsuario().equals(u)){
-                                    Carta c = newJ.elegirCarta(0);
+                                     newJ.robarCarta(g.getBaraja().sacarCarta());
+                                     System.out.println(newJ.getUsuario() + " roba carta");
+                                     newJ.ordenarMano();
+                                 } else {
+                                     if (newJ.getUsuario().equals(u)){
+                                         Carta c = newJ.elegirCarta(0);
 
-                                    while (!g.puedeJugar(c)){
-                                        System.out.println("Carta no jugable");
+                                         while (!g.puedeJugar(c)){
+                                             System.out.println("Carta no jugable");
 
-                                        c = newJ.elegirCarta(0);
-                                    }
+                                             c = newJ.elegirCarta(0);
+                                         }
 
-                                    g.jugarCarta(newJ, c);
-                                    newJ.getMano().remove(c);
+                                         g.jugarCarta(newJ, c);
+                                         newJ.getMano().remove(c);
 
-                                    oos.writeObject(g);
-                                    oos.flush();
-                                }
+                                         oos.writeObject(g);
+                                         oos.flush();
+                                     }
 
-                                System.out.println(newJ.getUsuario() + " juega carta");
-                            }
+                                     System.out.println(newJ.getUsuario() + " juega carta");
+                                 }
 
-                            if (j == g.getJugadores().size() - 1) {
-                                j = -1;
-                                g.incrementarTurno();
-                            }
+                                 if (j == g.getJugadores().size() - 1) {
+                                     j = -1;
+                                     g.incrementarTurno();
+                                 }
 
-                            if(g.getBaraja().numCartas() == 0){
-                                g.setBaraja(new Baraja());
-                            }
+                                 if(g.getBaraja().numCartas() == 0){
+                                     g.setBaraja(new Baraja());
+                                 }
 
-                        } else {
-                            j = 4;
-                        }
+                             } else {
+                                 j = 4;
+                             }
 
-                        g = (Game) ois.readObject();
-                    }
+                             g = (Game) ois.readObject();
+                         }
 
-                    if (g.haAcabado()) {
-                        System.out.println("Ha ganado " + g.ganador().getUsuario() + "!");
-                    }
-
+                         if (g.haAcabado()) {
+                             System.out.println("Ha ganado " + g.ganador().getUsuario() + "!");
+                         }
+                	}
+                   
                     break;
                 case 4:
                     
@@ -191,7 +258,11 @@ public class Client {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        }finally {
+			if(scan != null) {
+				scan.close();
+			}
+		}
     }
 
     public static void juegosOffline(Game g, Scanner scanner, int jugBots, int jugReal) {

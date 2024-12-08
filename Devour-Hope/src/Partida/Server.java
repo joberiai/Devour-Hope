@@ -20,13 +20,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
     public static void main(String[] args) {
-        try(ServerSocket server = new ServerSocket(60006)){
+    	LinkedList<String> salas = new LinkedList<String>();
+		
+		salas.add("localhost:25789");
+		salas.add("localhost:35789");
+		salas.add("localhost:45789");    		
+    	
+    	try(ServerSocket server = new ServerSocket(60006)){
             CyclicBarrier b = new CyclicBarrier(2);
             ExecutorService pool = Executors.newFixedThreadPool(2);
 
@@ -37,7 +46,7 @@ public class Server {
                     // Offline
                     Socket s = server.accept();
 
-                    AtenderPeticion pet = new AtenderPeticion(s, g, b);
+                    AtenderPeticion pet = new AtenderPeticion(s, g, b, salas);
                     pool.execute(pet);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -53,7 +62,7 @@ public class Server {
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse("src\\xml\\ranking.xml");
+            Document doc = docBuilder.parse("src/xml/ranking.xml");
 
             Element root = doc.getDocumentElement();
             NodeList list = root.getElementsByTagName("ganador");
