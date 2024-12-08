@@ -106,8 +106,10 @@ public class Client {
 							System.out.println("Elige la sala a la que quires acceder");
 							int idSala = scan.nextInt();
 							
+							/*
 							oos.writeObject(idSala);
 							oos.flush();
+							*/
 							
 							partidaEmpezada = true;
 							seguir = false;
